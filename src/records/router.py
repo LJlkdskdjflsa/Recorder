@@ -2,12 +2,19 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends
 
-from api.deps.user_deps import get_current_user
-from models.user_model import User
-from schemas.record_schema import RecordOut, RecordCreate, RecordUpdate
-from services.record_service import RecordService
+from src.records.schemas import RecordOut, RecordCreate, RecordUpdate
+from src.records.service import RecordService
+from src.users.dependencies import get_current_user
+from src.users.models import User
 
 record_router = APIRouter()
+
+
+# async def valid_record_id(record_id: UUID) -> Mapping:
+#     record = await service.get_by_id(record_id)
+#     if not record:
+#         raise recordNotFound()
+#     return record
 
 
 @record_router.get("/", summary="Get all record of the user", response_model=list[RecordOut])

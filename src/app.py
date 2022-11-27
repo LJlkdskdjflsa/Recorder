@@ -3,10 +3,10 @@ from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 from starlette.middleware.cors import CORSMiddleware
 
-from api.v1.router import router
-from core.config import settings
-from models.record_model import Record
-from models.user_model import User
+from src.config import settings
+from src.records.models import Record
+from src.router import router
+from src.users.models import User
 
 app = FastAPI(
     title=settings.PROJECT_NAME,

@@ -1,8 +1,12 @@
 from uuid import UUID
 
-from models.record_model import Record
-from models.user_model import User
-from schemas.record_schema import RecordCreate, RecordUpdate
+from src.records.models import Record
+from src.records.schemas import RecordCreate, RecordUpdate
+from src.users.models import User
+
+
+async def get_owned_record_by_id(record_id: str, user: User):
+    return await Record.find_one(Record.record_id == record_id, Record.owner.id == user.id)
 
 
 class RecordService:
@@ -13,7 +17,7 @@ class RecordService:
 
     @staticmethod
     async def retrieve(user: User, id: UUID) -> Record:
-        record = await Record.find_one(Record.record_id == id, Record.owner.id == user.id)
+        record = await get_owned_record_by_id(id, user)
         return record
 
     @staticmethod
@@ -23,13 +27,13 @@ class RecordService:
 
     @staticmethod
     async def update(user: User, id: UUID, data: RecordUpdate) -> Record:
-        record = await Record.find_one(Record.record_id == id, Record.owner.id == user.id)
+        record = await get_owned_record_by_id(id, user)
         await record.update({"$set": data.dict(exclude_unset=True)})
         await record.save()
         return record
 
     @staticmethod
     async def delete(user: User, id: UUID) -> None:
-        record = await Record.find_one(Record.record_id == id, Record.owner.id == user.id)
+        record = await get_owned_record_by_id(id, user)
         await record.delete()
         return None

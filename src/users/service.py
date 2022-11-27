@@ -1,8 +1,8 @@
 from uuid import UUID
 
-from core.security import get_password, verify_password
-from models.user_model import User
-from schemas.user_schema import UserAuth
+from src.security import get_password, verify_password
+from src.users.models import User
+from src.users.schemas import UserAuth
 
 
 class UserService:
