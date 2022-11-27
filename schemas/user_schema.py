@@ -12,3 +12,7 @@ class UserAuth(BaseModel):
 class UserOut(BaseModel):
     user_id: UUID
     username: str
+
+
+class UserUpdate(BaseModel):
+    username: str
