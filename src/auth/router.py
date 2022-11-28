@@ -5,9 +5,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt
 from pydantic import ValidationError
 
+from auth.service import create_access_token, create_refresh_token
 from src.auth.schemas import TokenSchema, TokenPayload
 from src.config import settings
-from src.security import create_access_token, create_refresh_token
 from src.users.dependencies import get_current_user
 from src.users.models import User
 from src.users.schemas import UserOut

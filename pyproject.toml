@@ -2,7 +2,7 @@
 name = "timeledgerbackend"
 version = "0.1.0"
 description = ""
-authors = ["LJ Li <ljli@xrex.io>"]
+authors = ["LJ Li <liliangjya@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -26,3 +26,13 @@ pytest = "^7.2.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pyright]
+include = ["./src"]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    ".", "src"
+]
+[tool.bandit]
+exclude_dirs = ["tests"]

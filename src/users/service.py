@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from src.security import get_password, verify_password
+from auth.service import get_password, verify_password
 from src.users.models import User
 from src.users.schemas import UserAuth
 
