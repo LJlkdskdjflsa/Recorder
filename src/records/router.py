@@ -2,7 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends
 
-from src.records.exceptions import RecordNotFund
+from exceptions import ItemNotFund
 from src.records.models import Record
 from src.records.schemas import RecordOut, RecordCreate, RecordUpdate
 from src.records.service import RecordService
@@ -15,18 +15,7 @@ record_router = APIRouter()
 async def get_record_by_id(record_id: UUID) -> Record:
     record = await Record.find_one(Record.record_id == record_id)
     if not record:
-        raise await RecordNotFund()
-    return record
-
-
-async def validate_ownership(
-        record: Record = Depends(get_record_by_id),
-        user: User = Depends(get_current_user),
-) -> Record:
-    # if record.owner.id != user.user_id:
-    #     raise UserNotOwner()
-    print(record.owner)
-    owner = record.owner
+        raise await ItemNotFund()
     return record
 
 
@@ -35,9 +24,6 @@ async def list(user: User = Depends(get_current_user)):
     return await RecordService.list(user)
 
 
-# @record_router.get("/one/", summary="Get record of the user by id", response_model=RecordOut)
-# async def retrieve(record: Record = Depends(validate_ownership)):
-#     return await RecordService.update(user=user, id=id, data=data)
 @record_router.get("/{id}", summary="Get record of the user by id", response_model=RecordOut)
 async def retrieve(id: UUID, user: User = Depends(get_current_user)):
     return await RecordService.retrieve(user=user, id=id)
@@ -54,6 +40,6 @@ async def update(id: UUID, data: RecordUpdate, user: User = Depends(get_current_
 
 
 @record_router.delete("/{id}", summary="Delete record by id")
-async def update(id: UUID, user: User = Depends(get_current_user)):
+async def delete(id: UUID, user: User = Depends(get_current_user)):
     await RecordService.delete(user=user, id=id)
     return None
