@@ -2,7 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends
 
-from exceptions import ItemNotFund
+from exceptions import raise_item_not_fund_exception
 from src.records.models import Record
 from src.records.schemas import RecordOut, RecordCreate, RecordUpdate
 from src.records.service import RecordService
@@ -15,7 +15,7 @@ record_router = APIRouter()
 async def get_record_by_id(record_id: UUID) -> Record:
     record = await Record.find_one(Record.record_id == record_id)
     if not record:
-        raise await ItemNotFund()
+        raise_item_not_fund_exception()
     return record
 
 
