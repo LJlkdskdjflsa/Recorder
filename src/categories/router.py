@@ -2,7 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends
 
-from exceptions import ItemNotFund
+from exceptions import raise_item_not_fund_exception
 from src.categories.models import Category
 from src.categories.schemas import CategoryOut, CategoryCreate, CategoryUpdate
 from src.categories.service import CategoryService
@@ -15,7 +15,7 @@ category_router = APIRouter()
 async def get_category_by_id(category_id: UUID) -> Category:
     category = await Category.find_one(Category.category_id == category_id)
     if not category:
-        raise await ItemNotFund()
+        raise_item_not_fund_exception()
     return category
 
 
