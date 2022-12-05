@@ -11,6 +11,8 @@ class Template(Document):
     template_id: UUID = Field(default_factory=uuid4, unique=True)
     title: Indexed(str)
     description: str | None = None
+    json_schema: dict | None = None
+    ui_schema: dict | None = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     owner: Link[User]
