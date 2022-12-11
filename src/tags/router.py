@@ -1,5 +1,4 @@
-from uuid import UUID
-
+from beanie import PydanticObjectId
 from fastapi import APIRouter
 
 from src.tags.schemas import TagOut, TagCreate
@@ -14,7 +13,7 @@ async def list():
 
 
 @tag_router.get("/{id}", summary="Get tag by id", response_model=TagOut | None)
-async def retrieve(id: UUID):
+async def retrieve(id: PydanticObjectId):
     return await TagService.retrieve(id=id)
 
 
@@ -24,6 +23,6 @@ async def create(data: TagCreate):
 
 
 @tag_router.delete("/{id}", summary="Delete tag by id")
-async def delete(id: UUID):
+async def delete(id: PydanticObjectId):
     await TagService.delete(id=id)
     return None

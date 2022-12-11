@@ -1,6 +1,6 @@
 from datetime import datetime
-from uuid import UUID
 
+from beanie import PydanticObjectId
 from pydantic import BaseModel, Field
 
 
@@ -15,7 +15,7 @@ class CategoryUpdate(BaseModel):
 
 
 class CategoryOut(BaseModel):
-    category_id: UUID
+    id: PydanticObjectId = Field(alias="_id")
     title: str
     description: str
     created_at: datetime

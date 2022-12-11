@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "timeledgerbackend"
+name = "Recorder"
 version = "0.1.0"
 description = ""
 authors = ["LJ Li <liliangjya@gmail.com>"]

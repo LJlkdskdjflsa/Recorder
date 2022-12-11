@@ -1,3 +1,5 @@
+import logging
+
 from beanie import init_beanie
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -25,11 +27,12 @@ app.add_middleware(
 )
 
 
-@app.on_event("startup")
-async def app_init():
+@app.on_event('startup')
+async def startup_event():
     """
         initialize crucial application services
     """
+    logging.critical('=================== Application start ===================')
 
     db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).time_ledger
 
@@ -37,6 +40,11 @@ async def app_init():
         database=db_client,
         document_models=[User, Record, Tag, Category, Template],
     )
+
+
+@app.on_event('shutdown')
+def shutdown_event():
+    logging.critical('=================== Application shutdown ===================')
 
 
 app.include_router(router, prefix=settings.API_V1_STR)

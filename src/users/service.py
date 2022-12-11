@@ -1,4 +1,4 @@
-from uuid import UUID
+from beanie import PydanticObjectId
 
 from auth.service import get_password, verify_password
 from src.users.models import User
@@ -31,6 +31,6 @@ class UserService:
         return user
 
     @staticmethod
-    async def get_user_by_id(id: UUID) -> User | None:
-        user = await User.find_one(User.user_id == id)
+    async def get_user_by_id(id: PydanticObjectId) -> User | None:
+        user = await User.find_one(User.id == id)
         return user

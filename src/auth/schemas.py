@@ -1,5 +1,4 @@
-from uuid import UUID
-
+from beanie import PydanticObjectId
 from pydantic import BaseModel
 
 
@@ -9,5 +8,5 @@ class TokenSchema(BaseModel):
 
 
 class TokenPayload(BaseModel):
-    sub: UUID | None = None
+    sub: PydanticObjectId | None = None
     exp: int | None = None

@@ -1,11 +1,7 @@
-from uuid import UUID, uuid4
-
 from beanie import Document, Indexed
-from pydantic import Field
 
 
 class Tag(Document):
-    tag_id: UUID = Field(default_factory=uuid4, unique=True)
     title: Indexed(str, unique=True)
 
     def __repr__(self) -> str:
@@ -19,7 +15,7 @@ class Tag(Document):
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Tag):
-            return self.tag_id == other.tag_id
+            return self.id == other.id
         return False
 
     class Collection:

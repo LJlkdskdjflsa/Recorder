@@ -1,12 +1,12 @@
-from uuid import UUID
+from beanie import PydanticObjectId
 
 from src.categories.models import Category
 from src.categories.schemas import CategoryCreate, CategoryUpdate
 from src.users.models import User
 
 
-async def get_owned_category_by_id(category_id: str, user: User):
-    return await Category.find_one(Category.category_id == category_id, Category.owner.id == user.id)
+async def get_owned_category_by_id(id: PydanticObjectId, user: User):
+    return await Category.find_one(Category.id == id, Category.owner.id == user.id)
 
 
 class CategoryService:
@@ -16,7 +16,7 @@ class CategoryService:
         return categories
 
     @staticmethod
-    async def retrieve(user: User, id: UUID) -> Category:
+    async def retrieve(user: User, id: PydanticObjectId) -> Category:
         category = await get_owned_category_by_id(id, user)
         return category
 
@@ -26,14 +26,14 @@ class CategoryService:
         return await category.insert()
 
     @staticmethod
-    async def update(user: User, id: UUID, data: CategoryUpdate) -> Category:
+    async def update(user: User, id: PydanticObjectId, data: CategoryUpdate) -> Category:
         category = await get_owned_category_by_id(id, user)
         await category.update({"$set": data.dict(exclude_unset=True)})
         await category.save()
         return category
 
     @staticmethod
-    async def delete(user: User, id: UUID) -> None:
+    async def delete(user: User, id: PydanticObjectId) -> None:
         category = await get_owned_category_by_id(id, user)
         await category.delete()
         return None

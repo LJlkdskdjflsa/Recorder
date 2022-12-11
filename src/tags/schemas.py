@@ -1,5 +1,4 @@
-from uuid import UUID
-
+from beanie import PydanticObjectId
 from pydantic import BaseModel, Field
 
 
@@ -8,5 +7,5 @@ class TagCreate(BaseModel):
 
 
 class TagOut(BaseModel):
-    tag_id: UUID
+    id: PydanticObjectId = Field(alias="_id")
     title: str

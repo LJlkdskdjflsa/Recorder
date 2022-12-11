@@ -1,5 +1,4 @@
-from uuid import UUID
-
+from beanie import PydanticObjectId
 from fastapi import APIRouter, Depends
 
 from exceptions import raise_item_not_fund_exception
@@ -12,8 +11,8 @@ from src.users.models import User
 category_router = APIRouter()
 
 
-async def get_category_by_id(category_id: UUID) -> Category:
-    category = await Category.find_one(Category.category_id == category_id)
+async def get_category_by_id(id: PydanticObjectId) -> Category:
+    category = await Category.find_one(Category.id == id)
     if not category:
         raise_item_not_fund_exception()
     return category
@@ -32,7 +31,7 @@ async def list(user: User = Depends(get_current_user)):
 
 
 @category_router.get("/{id}", summary="Get category of the user by id", response_model=CategoryOut)
-async def retrieve(id: UUID, user: User = Depends(get_current_user)):
+async def retrieve(id: PydanticObjectId, user: User = Depends(get_current_user)):
     return await CategoryService.retrieve(user=user, id=id)
 
 
@@ -42,11 +41,11 @@ async def create(data: CategoryCreate, user: User = Depends(get_current_user)):
 
 
 @category_router.put("/{id}", summary="Update category by id", response_model=CategoryOut)
-async def update(id: UUID, data: CategoryUpdate, user: User = Depends(get_current_user)):
+async def update(id: PydanticObjectId, data: CategoryUpdate, user: User = Depends(get_current_user)):
     return await CategoryService.update(user=user, id=id, data=data)
 
 
 @category_router.delete("/{id}", summary="Delete category by id")
-async def delete(id: UUID, user: User = Depends(get_current_user)):
+async def delete(id: PydanticObjectId, user: User = Depends(get_current_user)):
     await CategoryService.delete(user=user, id=id)
     return None

@@ -1,5 +1,4 @@
-from uuid import UUID
-
+from beanie import PydanticObjectId
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -10,7 +9,7 @@ class UserAuth(BaseModel):
 
 
 class UserOut(BaseModel):
-    user_id: UUID
+    id: PydanticObjectId = Field(alias="_id")
     username: str
 
 

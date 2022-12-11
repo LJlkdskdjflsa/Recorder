@@ -33,6 +33,7 @@ async def get_current_user(token: str = Depends(reusable_oauth)) -> User:
                 headers={"WWW-Authenticate": "Bearer"}
             )
     except(jwt.JWTError, ValidationError):
+        print("Token has expired")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",

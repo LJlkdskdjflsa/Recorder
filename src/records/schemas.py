@@ -1,6 +1,6 @@
 from datetime import datetime
-from uuid import UUID
 
+from beanie import PydanticObjectId
 from pydantic import BaseModel, Field
 
 
@@ -15,7 +15,7 @@ class RecordUpdate(BaseModel):
 
 
 class RecordOut(BaseModel):
-    record_id: UUID
+    id: PydanticObjectId = Field(alias="_id")
     title: str
     data: dict | None
     created_at: datetime

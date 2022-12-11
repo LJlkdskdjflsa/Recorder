@@ -1,11 +1,11 @@
-from uuid import UUID
+from beanie import PydanticObjectId
 
 from src.tags.models import Tag
 from src.tags.schemas import TagCreate
 
 
-async def get_tag_by_id(tag_id) -> Tag:
-    return await Tag.find_one(Tag.tag_id == tag_id)
+async def get_tag_by_id(id) -> Tag:
+    return await Tag.find_one(Tag.id == id)
 
 
 class TagService:
@@ -15,13 +15,13 @@ class TagService:
         return tags
 
     @staticmethod
-    async def retrieve(id: UUID) -> Tag:
+    async def retrieve(id: PydanticObjectId) -> Tag:
         tag = await get_tag_by_id(id)
         print(tag)
         return tag
 
     @staticmethod
-    async def delete(id: UUID) -> None:
+    async def delete(id: PydanticObjectId) -> None:
         tag = await get_tag_by_id(id)
         await tag.delete()
         return None
