@@ -1,5 +1,11 @@
-from beanie import PydanticObjectId
+import logging
 
+from beanie import Link
+from beanie import PydanticObjectId
+from beanie import WriteRules
+
+from categories.models import Category
+from categories.service import get_category_by_id
 from src.templates.models import Template
 from src.templates.schemas import TemplateCreate, TemplateUpdate
 from src.users.models import User
@@ -18,16 +24,22 @@ class TemplateService:
     @staticmethod
     async def retrieve(user: User, id: PydanticObjectId) -> Template:
         template = await get_owned_template_by_id(id, user)
-        print(template.id)
-        print(type(template.id))
-        print(type(template.owner))
-        print((template.owner))
         return template
 
     @staticmethod
     async def create(user: User, data: TemplateCreate) -> Template:
+        logging.critical('=================== TemplateCreate ===================')
+        print(data.dict())
+        if data.dict()['categories'] == [] or data.dict()['categories'] == None:
+            logging.critical('=================== None or [] ===================')
+        else:
+            logging.critical('=================== value===================')
+            category = (await get_category_by_id(PydanticObjectId("638df7713f4b52cf4e8974f2")))
+            data.categories = [Link(ref=category, model_class=Category)]
+
         template = Template(**data.dict(), owner=user)
-        return await template.insert()
+        saved_template = await template.save(link_rule=WriteRules.WRITE)
+        return saved_template
 
     @staticmethod
     async def update(user: User, id: PydanticObjectId, data: TemplateUpdate) -> Template:

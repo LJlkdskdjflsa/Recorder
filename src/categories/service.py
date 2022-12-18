@@ -9,6 +9,10 @@ async def get_owned_category_by_id(id: PydanticObjectId, user: User):
     return await Category.find_one(Category.id == id, Category.owner.id == user.id)
 
 
+async def get_category_by_id(id: PydanticObjectId):
+    return await Category.find_one(Category.id == id)
+
+
 class CategoryService:
     @staticmethod
     async def list(user: User) -> list[Category]:

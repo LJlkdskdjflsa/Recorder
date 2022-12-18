@@ -1,0 +1,97 @@
+Table User {
+  id uuid [pk]
+  username varchar
+  email email
+  createdAt datetime
+  phone phone
+  // avatar image
+  templates [Template]
+  thirdRegistration boolean
+  refereringId uuid
+  referering User // @relation("refer", fields: [refereringId], references: [id])
+  referered User  // @relation("refer")
+}
+
+// 個人資料
+Table Profile {
+  id uuid [pk]
+  user User  // @relation(fields: [userId], references: [id])
+  userId uuid
+  favoriteTags [TagsOnProfiles]
+  favoriteCategories [CategoryOnProfiles]
+  favoriteTemplates [TemplateOnProfiles]
+}
+
+Table Tag {
+  id uuid [pk]
+  // image Image
+  title varchar
+  description text
+  creator User // @relation(fields: [creatorId], references: [id])
+  creatorId uuid
+  records [TagsOnRecords]
+  templates [TagsOnTemplates]
+  profiles [TagsOnProfiles]
+}
+
+Table Category {
+  id uuid [pk]
+  // image Image
+  title varchar
+  description text
+  creator User // @relation(fields: [creatorId], references: [id])
+  creatorId uuid
+  profiles [Profile]
+  templates [CategoriesOnTemplates]
+  parents [Category] // @relation("Category")
+  children [Category] // @relation("Category")
+}
+
+table Template{
+  id uuid [pk]
+  // image Image
+  title varchar
+  description text
+  creators [UsersOnTemplates]
+  tags [TagsOnTemplates]
+  categories [CategoriesOnTemplates]
+  records [RecordsOnTemplates]
+  profiles [TemplateOnProfiles]
+  parents [Template] // @relation("Template")
+  children [Template] // @relation("Template")
+  meta json
+}
+
+Table Record {
+  id uuid [pk]
+  user User  // @relation(fields: [userId], references: [id])
+  userId uuid
+  templates [RecordsOnTemplates] // @relation(fields: [templateIds], references: [id])
+  // templateIds [uuid]
+  tags [TagsOnRecords] // @relation(fields: [tagIds], references: [id])
+  // tagIds [uuid]
+  // basic
+  // start_at datetime
+  // end_at datetime
+  // title varchar
+  // description text
+  // advance
+  meta json // 裡面放 Template
+}
+
+
+Ref: "User"."referering" - "User"."id"
+Ref: "User"."templates" <> "Template"."creators"
+Ref: "Tag"."creator" - "User"."id"
+Ref: "Tag"."records" <> "Record"."tags"
+Ref: "Category"."parents" <> "Category"."children"
+Ref: "Category"."creator" - "User"."id"
+Ref: "Profile"."user" - "User"."id"
+Ref: "Profile"."favoriteTags" < "Tag"."profiles"
+Ref: "Profile"."favoriteCategories" < "Category"."profiles"
+Ref: "Profile"."favoriteTemplates" < "Template"."profiles"
+Ref: "Template"."parents" <> "Template"."children"
+Ref: "Template"."tags" <> "Tag"."templates"
+Ref: "Template"."categories" <> "Category"."templates"
+Ref: "Record"."user" - "User"."id"
+Ref: "Record"."templates" <> "Template"."records"

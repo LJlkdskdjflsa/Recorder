@@ -1,9 +1,12 @@
 from datetime import datetime
+from string import Template
 
 from beanie import Document, Indexed, Link, before_event, Replace, Insert
 from pydantic import Field
 
+from categories.models import Category
 from src.users.models import User
+from tags.models import Tag
 
 
 class Template(Document):
@@ -14,6 +17,8 @@ class Template(Document):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     owner: Link[User]
+    tags: list[Link[Tag]] | None
+    categories: list[Link[Category]] | None
 
     def __repr__(self) -> str:
         return f"<Template {self.title}>"
