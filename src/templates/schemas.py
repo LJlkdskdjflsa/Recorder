@@ -3,6 +3,7 @@ from datetime import datetime
 from beanie import PydanticObjectId
 from pydantic import BaseModel, Field
 
+from categories.schemas import CategoryOut
 from tags.schemas import TagOut
 
 
@@ -24,7 +25,7 @@ class TemplateUpdate(BaseModel):
     tags: list[str] | None
 
 
-class TemplateOut(BaseModel):
+class TemplateOutFull(BaseModel):
     id: PydanticObjectId = Field(alias="_id")
 
     title: str
@@ -33,5 +34,14 @@ class TemplateOut(BaseModel):
     ui_schema: dict | None
     created_at: datetime
     updated_at: datetime
-    # categories: list[CategoryOut] | None
+    categories: list[CategoryOut] | None
     tags: list[TagOut] | None
+
+
+class TemplateOutMin(BaseModel):
+    id: PydanticObjectId = Field(alias="_id")
+
+    title: str
+    description: str | None
+    json_schema: dict | None
+    ui_schema: dict | None

@@ -3,10 +3,10 @@ from datetime import datetime
 from beanie import Document, Indexed, Link, before_event, Replace, Insert
 from pydantic import Field
 
-from categories.models import Category
+from src.categories.models import Category
+from src.tags.models import Tag
+from src.templates.models import Template
 from src.users.models import User
-from tags.models import Tag
-from templates.models import Template
 
 
 class Record(Document):
