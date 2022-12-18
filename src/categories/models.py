@@ -3,7 +3,7 @@ from datetime import datetime
 from beanie import Document, Indexed, Link, before_event, Replace, Insert
 from pydantic import Field
 
-from src.users.models import User
+from users.models import User
 
 
 class Category(Document):

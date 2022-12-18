@@ -4,9 +4,9 @@ from string import Template
 from beanie import Document, Indexed, Link, before_event, Replace, Insert
 from pydantic import Field
 
-from src.categories.models import Category
-from src.tags.models import Tag
-from src.users.models import User
+from categories.models import Category
+from tags.models import Tag
+from users.models import User
 
 
 class Template(Document):

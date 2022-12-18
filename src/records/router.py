@@ -2,11 +2,11 @@ from beanie import PydanticObjectId
 from fastapi import APIRouter, Depends
 
 from exceptions import raise_item_not_fund_exception
-from src.records.models import Record
-from src.records.schemas import RecordOut, RecordCreate, RecordUpdate
-from src.records.service import RecordService
-from src.users.dependencies import get_current_user
-from src.users.models import User
+from records.models import Record
+from records.schemas import RecordOut, RecordCreate, RecordUpdate
+from records.service import RecordService
+from users.dependencies import get_current_user
+from users.models import User
 
 record_router = APIRouter()
 

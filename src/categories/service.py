@@ -1,8 +1,8 @@
 from beanie import PydanticObjectId
 
-from src.categories.models import Category
-from src.categories.schemas import CategoryCreate, CategoryUpdate
-from src.users.models import User
+from categories.models import Category
+from categories.schemas import CategoryCreate, CategoryUpdate
+from users.models import User
 
 
 async def get_owned_category_by_id(id: PydanticObjectId, user: User):

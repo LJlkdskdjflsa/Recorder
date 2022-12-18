@@ -2,8 +2,8 @@ import pymongo.errors
 from fastapi import APIRouter, Depends
 from fastapi import HTTPException, status
 
-from src.users.schemas import UserAuth, UserOut
-from src.users.service import UserService
+from users.schemas import UserAuth, UserOut
+from users.service import UserService
 from users.dependencies import get_current_user
 from users.models import User
 

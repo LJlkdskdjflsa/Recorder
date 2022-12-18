@@ -1,8 +1,8 @@
 from beanie import PydanticObjectId
 from fastapi import APIRouter
 
-from src.tags.schemas import TagOut, TagCreate
-from src.tags.service import TagService
+from tags.schemas import TagOut, TagCreate
+from tags.service import TagService
 
 tag_router = APIRouter()
 

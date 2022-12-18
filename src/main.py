@@ -5,13 +5,13 @@ from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 from starlette.middleware.cors import CORSMiddleware
 
-from src.categories.models import Category
-from src.config import settings
-from src.records.models import Record
-from src.router import router
-from src.tags.models import Tag
-from src.templates.models import Template
-from src.users.models import User
+from categories.models import Category
+from config import settings
+from records.models import Record
+from router import router
+from tags.models import Tag
+from templates.models import Template
+from users.models import User
 
 app = FastAPI(
     title=settings.PROJECT_NAME,

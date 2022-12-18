@@ -1,8 +1,8 @@
 from beanie import PydanticObjectId
 
-from src.templates.models import Template
-from src.templates.schemas import TemplateCreate, TemplateUpdate
-from src.users.models import User
+from templates.models import Template
+from templates.schemas import TemplateCreate, TemplateUpdate
+from users.models import User
 
 
 async def get_owned_template_by_id(id: str, user: User):

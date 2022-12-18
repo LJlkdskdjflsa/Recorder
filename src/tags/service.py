@@ -1,7 +1,7 @@
 from beanie import PydanticObjectId
 
-from src.tags.models import Tag
-from src.tags.schemas import TagCreate
+from tags.models import Tag
+from tags.schemas import TagCreate
 
 
 async def get_tag_by_id(id) -> Tag:

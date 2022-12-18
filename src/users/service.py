@@ -1,8 +1,8 @@
 from beanie import PydanticObjectId
 
 from auth.service import get_password, verify_password
-from src.users.models import User
-from src.users.schemas import UserAuth
+from users.models import User
+from users.schemas import UserAuth
 
 
 class UserService:

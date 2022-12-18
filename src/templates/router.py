@@ -2,11 +2,11 @@ from beanie import PydanticObjectId
 from fastapi import APIRouter, Depends
 
 from exceptions import raise_item_not_fund_exception
-from src.templates.models import Template
-from src.templates.schemas import TemplateOutFull, TemplateCreate, TemplateUpdate
-from src.templates.service import TemplateService
-from src.users.dependencies import get_current_user
-from src.users.models import User
+from templates.models import Template
+from templates.schemas import TemplateOutFull, TemplateCreate, TemplateUpdate
+from templates.service import TemplateService
+from users.dependencies import get_current_user
+from users.models import User
 
 template_router = APIRouter()
 

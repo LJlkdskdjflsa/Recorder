@@ -1,8 +1,8 @@
 from beanie import PydanticObjectId
 
-from src.records.models import Record
-from src.records.schemas import RecordCreate, RecordUpdate
-from src.users.models import User
+from records.models import Record
+from records.schemas import RecordCreate, RecordUpdate
+from users.models import User
 
 
 async def get_owned_record_by_id(id: str, user: User):
